@@ -1,9 +1,7 @@
-/* Import slick carousel styles */
+/* Import fonts and external CSS first */
+@import url('https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan.css');
 @import "slick-carousel/slick/slick.css";
 @import "slick-carousel/slick/slick-theme.css";
-
-/* Import fonts */
-@import url('https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan.css');
 
 /* Apply Tailwind directives */
 @tailwind base;

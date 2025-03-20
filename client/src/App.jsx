@@ -47,11 +47,12 @@ function App() {
 
     const fetchProducts = async () => {
       try {
-        // Use import.meta.env for Vite, fallback to local URL
-        const apiUrl =
-          window.location.hostname === "localhost"
+        // API URL handling based on environment
+        const apiUrl = 
+          window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
             ? "http://localhost:5000/api/products"
             : "/api/products";
+        
         console.log("Fetching from:", apiUrl);
         const response = await axios.get(apiUrl);
         console.log("Products fetched:", response.data);

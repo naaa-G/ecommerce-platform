@@ -11,11 +11,16 @@ export default defineConfig({
     sourcemap: true,
     rollupOptions: {
       output: {
-        manualChunks: undefined
+        manualChunks: undefined,
+        assetFileNames: 'assets/[name].[hash].[ext]'
       }
     }
   },
   server: {
+    port: 5173,
+    strictPort: true
+  },
+  preview: {
     port: 5173,
     strictPort: true
   }
