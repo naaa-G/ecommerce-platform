@@ -57,7 +57,7 @@ function App() {
 
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("/api/products"); // Local testing
+        const response = await axios.get("http://localhost:5000/api/products"); // Local testing
         console.log("Products fetched:", response.data);
         setProducts(response.data || []);
       } catch (error) {
@@ -109,9 +109,7 @@ function App() {
             </h1>
             <div className="flex items-center gap-4">
               <div
-                className={`language-dropdown ${
-                  isDropdownOpen ? "active" : ""
-                }`}
+                className={`language-dropdown ${isDropdownOpen ? "active" : ""}`}
                 ref={dropdownRef}
               >
                 <button onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
@@ -132,9 +130,7 @@ function App() {
                 </button>
                 <div className="language-options">
                   <div
-                    className={`language-option ${
-                      language === "en" ? "active" : ""
-                    }`}
+                    className={`language-option ${language === "en" ? "active" : ""}`}
                     onClick={() => changeLanguage("en")}
                     data-lang="en"
                   >
@@ -154,9 +150,7 @@ function App() {
                     English
                   </div>
                   <div
-                    className={`language-option ${
-                      language === "fa" ? "active" : ""
-                    }`}
+                    className={`language-option ${language === "fa" ? "active" : ""}`}
                     onClick={() => changeLanguage("fa")}
                     data-lang="fa"
                   >
@@ -209,9 +203,7 @@ function App() {
               <div className="slick-container">
                 <Slider {...sliderSettings}>
                   {products.map((product) => {
-                    const cartItem = cart.find(
-                      (item) => item._id === product._id
-                    );
+                    const cartItem = cart.find((item) => item._id === product._id);
                     const quantity = cartItem ? cartItem.quantity : 0;
                     return (
                       <div key={product._id}>
@@ -219,19 +211,13 @@ function App() {
                           <div className="product-image">
                             <img
                               src={product.image}
-                              alt={
-                                language === "en"
-                                  ? product.nameEn
-                                  : product.nameFa
-                              }
+                              alt={language === "en" ? product.nameEn : product.nameFa}
                             />
                             <div className="product-overlay" />
                           </div>
                           <div className="product-info">
                             <h3 className="product-title">
-                              {language === "en"
-                                ? product.nameEn
-                                : product.nameFa}
+                              {language === "en" ? product.nameEn : product.nameFa}
                             </h3>
                             <p className="product-price">
                               {product.price.toLocaleString(
@@ -301,9 +287,7 @@ function App() {
                   className="text-center"
                   style={{ color: "var(--text-secondary)" }}
                 >
-                  {language === "en"
-                    ? "Your cart is empty"
-                    : "سبد خرید خالی است"}
+                  {language === "en" ? "Your cart is empty" : "سبد خرید خالی است"}
                 </p>
               ) : (
                 <div className="space-y-4">
@@ -369,11 +353,7 @@ function App() {
         <div className="container">
           <p>
             {language === "en" ? "Created by " : "ساخته شده توسط "}
-            <a
-              href="https://github.com/naaa-G"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href="https://github.com/naaa-G" target="_blank" rel="noopener noreferrer">
               naaa-G
             </a>
           </p>
