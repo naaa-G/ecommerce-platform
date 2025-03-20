@@ -1,35 +1,17 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
+// Vite configuration for local development
+// This setup is optimized for running the app locally
 export default defineConfig({
   plugins: [react()],
-  base: '/',
-  build: {
-    outDir: 'dist',
-    emptyOutDir: true,
-    minify: 'terser',
-    sourcemap: false,
-    rollupOptions: {
-      output: {
-        manualChunks: undefined,
-        assetFileNames: 'assets/[name].[hash].[ext]'
-      }
-    }
-  },
+  // Server configuration
   server: {
+    // Default port for frontend
     port: 5173,
-    strictPort: true,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:5000',
-        changeOrigin: true,
-        secure: false,
-      }
-    }
+    // Display server URL in console
+    open: false,
+    // Enable HMR (Hot Module Replacement)
+    hmr: true,
   },
-  preview: {
-    port: 5173,
-    strictPort: true
-  }
 })

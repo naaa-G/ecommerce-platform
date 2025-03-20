@@ -1,88 +1,85 @@
-# Modern E-commerce Platform
+# E-Commerce Platform
 
-<div align="center">
+A modern, responsive e-commerce platform built with React, Node.js, and MongoDB. Features a beautiful dark theme UI, bilingual support (English/Persian), and real-time cart management.
 
-A modern, responsive e-commerce platform with bilingual support (English/Persian) and a beautiful dark theme UI.
+# پلتفرم تجارت الکترونیک
 
-[![React](https://img.shields.io/badge/React-18.2.0-blue.svg)](https://reactjs.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.3.0-38B2AC.svg)](https://tailwindcss.com/)
-[![Vite](https://img.shields.io/badge/Vite-4.3.9-646CFF.svg)](https://vitejs.dev/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-4.4.0-47A248.svg)](https://www.mongodb.com/)
-[![Vercel](https://img.shields.io/badge/Vercel-Platform-000000.svg)](https://vercel.com)
+یک پلتفرم تجارت الکترونیک مدرن و واکنش‌گرا که با React، Node.js و MongoDB ساخته شده است. دارای رابط کاربری زیبا با تم تاریک، پشتیبانی دو زبانه (انگلیسی/فارسی) و مدیریت سبد خرید در زمان واقعی.
 
-</div>
+## Features | ویژگی‌ها
 
-## ✨ Features
+- 🌐 **Bilingual Support**: Full English and Persian language support with RTL layout
+- 🛒 **Real-time Cart Management**: Add, remove, and update product quantities instantly
+- 🎨 **Modern Dark Theme**: Sleek and eye-friendly dark mode interface
+- 🔍 **Smart Search**: Real-time product search with instant results
+- 📱 **Responsive Design**: Perfectly optimized for all device sizes
+- 🎯 **Product Categories**: Organized product display with smooth carousel
+- 💳 **Checkout Process**: Streamlined checkout with cart summary
+- 🔄 **Dynamic UI**: Smooth transitions and animations
+- 🎨 **Tailwind CSS**: Modern utility-first styling
+- 🚀 **Vite**: Lightning-fast development and build times
 
-- 🌐 **Bilingual Support (English/Persian)**
-- 🌙 **Modern Dark Theme**
-- 🛒 **Shopping Cart Functionality**
-- 🎨 **Responsive Design**
-- 🔄 **Real-time Product Updates**
-- 🎯 **Smooth Animations**
-- 📱 **Mobile-Friendly**
+- 🌐 **پشتیبانی دو زبانه**: پشتیبانی کامل از زبان‌های انگلیسی و فارسی با چیدمان RTL
+- 🛒 **مدیریت سبد خرید در زمان واقعی**: افزودن، حذف و به‌روزرسانی تعداد محصولات به صورت آنی
+- 🎨 **تم تاریک مدرن**: رابط کاربری زیبا و مناسب برای چشم
+- 🔍 **جستجوی هوشمند**: جستجوی محصولات در زمان واقعی با نتایج فوری
+- 📱 **طراحی واکنش‌گرا**: بهینه‌سازی شده برای تمام اندازه‌های دستگاه
+- 🎯 **دسته‌بندی محصولات**: نمایش منظم محصولات با اسلایدر روان
+- 💳 **فرآیند پرداخت**: پرداخت ساده با خلاصه سبد خرید
+- 🔄 **رابط کاربری پویا**: انیمیشن‌ها و انتقال‌های روان
+- 🎨 **Tailwind CSS**: استایل‌دهی مدرن با رویکرد utility-first
+- 🚀 **Vite**: توسعه و ساخت سریع
 
-## 🛠️ Tech Stack
+## 🛠️ Tech Stack | فناوری‌های استفاده شده
 
-### Frontend
-- React.js
-- Tailwind CSS
-- Axios
-- React Slick Carousel
-- Context API
-- Vite (Frontend Build Tool)
+### Frontend | فرانت‌اند
+- ⚛️ React 18
+- 🎨 Tailwind CSS
+- 🎯 Vite
+- 🎠 Slick Carousel
+- 🌐 React Router
+- 🎭 Context API
 
-### Backend
-- MongoDB
-- Express
-- Node.js
+### Backend | بک‌اند
+- 🚀 Node.js
+- 🎯 Express.js
+- 🗄️ MongoDB
+- 🎭 Mongoose
+- 🔒 CORS
+- 📦 Nodemon
 
-### Deployment
-- Vercel
+## 🚀 Getting Started | شروع کار
 
-## 🚀 Getting Started
-
-### Prerequisites
-
+### Prerequisites | پیش‌نیازها
 - Node.js (v14 or higher)
+- MongoDB
 - npm or yarn
-- MongoDB (for backend)
 
-### Installation
+### Installation | نصب
 
-1. **Clone the repository**:
+۱. **Clone the repository | کلون کردن مخزن**:
 ```bash
 git clone https://github.com/naaa-G/ecommerce-platform.git
 cd ecommerce-platform
 ```
 
-2. **Install server dependencies**:
+۲. **Install dependencies | نصب وابستگی‌ها**:
 ```bash
+# Install backend dependencies
 cd server
 npm install
-```
 
-3. **Install client dependencies**:
-```bash
+# Install frontend dependencies
 cd ../client
 npm install
 ```
 
-4. **Configure environment variables**:
+۳. **Configure MongoDB | تنظیم MongoDB**:
+- Create a MongoDB database (local or Atlas)
+- Update the connection string in `server/index.js`
 
-Create `client/.env` for local development:
-```env
-# Leave VITE_VERCEL undefined or commented out for local development
-# VITE_VERCEL=1  # Uncomment this to simulate Vercel locally
-```
+۴. **Start the servers | اجرای سرورها**:
 
-Create `server/.env` for MongoDB:
-```env
-MONGO_URI=mongodb+srv://<username>:<password>@cluster0.j2cvx.mongodb.net/?retryWrites=true&w=majority
-```
-
-5. **Start the servers**:
-```bash
 # Terminal 1 - Backend
 cd server
 npm start
@@ -92,68 +89,29 @@ cd client
 npm run dev
 ```
 
-## 🌐 Deployment
-
-### Local Development
+۶. **Access the application | دسترسی به برنامه**:
 - Frontend: http://localhost:5173
 - Backend API: http://localhost:5000/api/products
 
-### Vercel Deployment
+## 📝 Development Notes | نکات توسعه
 
-1. **Push to GitHub**:
-```bash
-git add .
-git commit -m "Initial commit"
-git push origin main
-```
+- Make sure both frontend and backend servers are running simultaneously
+- API URL is configured for local backend at http://localhost:5000
+- All API requests should use the full URL: `axios.get("http://localhost:5000/api/products")`
+- MongoDB can be run locally or via Atlas (cloud)
 
-2. **Deploy on Vercel**:
-   - Go to [Vercel](https://vercel.com)
-   - Sign in with GitHub
-   - Import repository
-   - Configure build settings:
-     - Framework Preset: Vite
-     - Root Directory: client
-     - Build Command: `npm run build`
-     - Output Directory: dist
-   - Add environment variables:
-     ```env
-     VITE_VERCEL=1
-     MONGO_URI=<your-mongo-uri>
-     ```
-   - Click "Deploy"
+- اطمینان حاصل کنید که هر دو سرور فرانت‌اند و بک‌اند به طور همزمان در حال اجرا هستند
+- آدرس API برای اتصال به بک‌اند محلی در http://localhost:5000 پیکربندی شده است
+- هر درخواست API باید از URL کامل استفاده کند: `axios.get("http://localhost:5000/api/products")`
+- MongoDB می‌تواند به صورت محلی یا از طریق Atlas (ابری) اجرا شود
 
-3. **Configure Vercel routing**:
-
-Create `vercel.json` in the root:
-```json
-{
-  "version": 2,
-  "builds": [
-    {"src": "client/package.json", "use": "@vercel/static-build", "config": {"distDir": "dist"}},
-    {"src": "server/index.js", "use": "@vercel/node"}
-  ],
-  "routes": [
-    {"src": "/api/(.*)", "dest": "/server/index.js"},
-    {"src": "/(.*)", "dest": "/client/dist/index.html"}
-  ]
-}
-```
-
-4. **Access your app**:
-   - URL: https://your-project-name.vercel.app
-   - API endpoint: https://your-project-name.vercel.app/api/products
-
-## 📝 Notes
-
-- **Local Development**: No need to modify App.jsx—the API URL is dynamically set based on VITE_VERCEL.
-- **Vercel**: Ensure VITE_VERCEL=1 is set in Vercel's environment variables to use the production API path.
-
-## 🤝 Contributing
+## 🤝 Contributing | مشارکت
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## 👤 Author
+مشارکت‌ها مورد استقبال هستند! لطفاً آزادانه درخواست Pull Request ارسال کنید.
+
+## 👤 Author | نویسنده
 
 <div align="center">
 
@@ -161,166 +119,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 [![Email](https://img.shields.io/badge/Email-atiar.yaser@gmail.com-D14836.svg?logo=gmail)](mailto:atiar.yaser@gmail.com)
 
 Made with ❤️ by naaa-G
-
-</div>
-
----
-
-# پلتفرم فروشگاه آنلاین مدرن
-
-<div align="center">
-
-یک پلتفرم فروشگاه آنلاین مدرن و واکنش‌گرا با پشتیبانی دو زبانه (انگلیسی/فارسی) و رابط کاربری زیبا با تم تاریک.
-
-</div>
-
-## ✨ ویژگی‌ها
-
-- 🌐 **پشتیبانی دو زبانه (انگلیسی/فارسی)**
-- 🌙 **تم تاریک مدرن**
-- 🛒 **عملکرد سبد خرید**
-- 🎨 **طراحی واکنش‌گرا**
-- 🔄 **به‌روزرسانی محصولات در زمان واقعی**
-- 🎯 **انیمیشن‌های روان**
-- 📱 **سازگار با موبایل**
-
-## 🛠️ فناوری‌های استفاده شده
-
-### فرانت‌اند
-- React.js
-- Tailwind CSS
-- Axios
-- React Slick Carousel
-- Context API
-- Vite (ابزار ساخت فرانت‌اند)
-
-### بک‌اند
-- MongoDB
-- Express
-- Node.js
-
-### استقرار
-- Vercel
-
-## 🚀 شروع کار
-
-### پیش‌نیازها
-
-- Node.js (نسخه ۱۴ یا بالاتر)
-- npm یا yarn
-- MongoDB (برای بک‌اند)
-
-### نصب
-
-۱. **کلون کردن مخزن**:
-```bash
-git clone https://github.com/naaa-G/ecommerce-platform.git
-cd ecommerce-platform
-```
-
-۲. **نصب وابستگی‌های سرور**:
-```bash
-cd server
-npm install
-```
-
-۳. **نصب وابستگی‌های کلاینت**:
-```bash
-cd ../client
-npm install
-```
-
-۴. **تنظیم متغیرهای محیطی**:
-
-فایل `client/.env` را برای توسعه محلی ایجاد کنید:
-```env
-# برای توسعه محلی، VITE_VERCEL را تعریف نکنید یا کامنت کنید
-# VITE_VERCEL=1  # برای شبیه‌سازی Vercel محلی، این خط را از کامنت خارج کنید
-```
-
-فایل `server/.env` را برای MongoDB ایجاد کنید:
-```env
-MONGO_URI=mongodb+srv://<username>:<password>@cluster0.j2cvx.mongodb.net/?retryWrites=true&w=majority
-```
-
-۵. **شروع سرورها**:
-```bash
-# ترمینال ۱ - بک‌اند
-cd server
-npm start
-
-# ترمینال ۲ - فرانت‌اند
-cd client
-npm run dev
-```
-
-## 🌐 استقرار
-
-### توسعه محلی
-- فرانت‌اند: http://localhost:5173
-- API بک‌اند: http://localhost:5000/api/products
-
-### استقرار در Vercel
-
-۱. **ارسال به GitHub**:
-```bash
-git add .
-git commit -m "Initial commit"
-git push origin main
-```
-
-۲. **استقرار در Vercel**:
-   - به [Vercel](https://vercel.com) بروید
-   - با GitHub وارد شوید
-   - مخزن را وارد کنید
-   - تنظیمات ساخت را پیکربندی کنید:
-     - تنظیمات پیش‌فرض فریم‌ورک: Vite
-     - دایرکتوری ریشه: client
-     - دستور ساخت: `npm run build`
-     - دایرکتوری خروجی: dist
-   - متغیرهای محیطی را اضافه کنید:
-     ```env
-     VITE_VERCEL=1
-     MONGO_URI=<your-mongo-uri>
-     ```
-   - روی "Deploy" کلیک کنید
-
-۳. **تنظیم مسیرهای Vercel**:
-
-فایل `vercel.json` را در ریشه ایجاد کنید:
-```json
-{
-  "version": 2,
-  "builds": [
-    {"src": "client/package.json", "use": "@vercel/static-build", "config": {"distDir": "dist"}},
-    {"src": "server/index.js", "use": "@vercel/node"}
-  ],
-  "routes": [
-    {"src": "/api/(.*)", "dest": "/server/index.js"},
-    {"src": "/(.*)", "dest": "/client/dist/index.html"}
-  ]
-}
-```
-
-۴. **دسترسی به برنامه**:
-   - آدرس: https://your-project-name.vercel.app
-   - نقطه پایان API: https://your-project-name.vercel.app/api/products
-
-## 📝 نکات
-
-- **توسعه محلی**: نیازی به تغییر App.jsx نیست - آدرس API به صورت پویا بر اساس VITE_VERCEL تنظیم می‌شود.
-- **Vercel**: اطمینان حاصل کنید که VITE_VERCEL=1 در متغیرهای محیطی Vercel تنظیم شده است تا از مسیر API تولید استفاده شود.
-
-## 🤝 مشارکت
-
-مشارکت‌ها مورد استقبال هستند! لطفاً آزادانه درخواست Pull Request ارسال کنید.
-
-## 👤 نویسنده
-
-<div align="center">
-
-[![GitHub](https://img.shields.io/badge/GitHub-@naaa--G-181717.svg?logo=github)](https://github.com/naaa-G)
-[![Email](https://img.shields.io/badge/Email-atiar.yaser@gmail.com-D14836.svg?logo=gmail)](mailto:atiar.yaser@gmail.com)
 
 ساخته شده با ❤️ توسط naaa-G
 

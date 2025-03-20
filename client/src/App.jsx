@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./index.css";
 
+// Convert numbers to Persian numerals
 const toPersianNumber = (number) => {
   const persianNumbers = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
   return String(number)
@@ -17,22 +18,31 @@ const toPersianNumber = (number) => {
 
 function App() {
   const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const { cart, addToCart, removeFromCart, updateQuantity } = useCart();
   const [language, setLanguage] = useState("en");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const dropdownRef = useRef(null);
+  const searchRef = useRef(null);
 
+  // Handle clicks outside of dropdown menu
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsDropdownOpen(false);
+      }
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setIsSearchOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Change language handler
   const changeLanguage = (newLang) => {
     setLanguage(newLang);
     document.documentElement.dir = newLang === "fa" ? "rtl" : "ltr";
@@ -40,26 +50,26 @@ function App() {
     setIsDropdownOpen(false);
   };
 
+  // Fetch products from API
   useEffect(() => {
     console.log("useEffect is running");
+    // Set document direction based on language
     document.documentElement.dir = language === "fa" ? "rtl" : "ltr";
     document.documentElement.lang = language;
 
     const fetchProducts = async () => {
       try {
-        // API URL handling based on environment
-        const apiUrl = 
-          window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-            ? "http://localhost:5000/api/products"
-            : "/api/products";
-        
+        // For local development only - connect to local backend server
+        const apiUrl = "http://localhost:5000/api/products";
         console.log("Fetching from:", apiUrl);
         const response = await axios.get(apiUrl);
         console.log("Products fetched:", response.data);
         setProducts(response.data || []);
+        setFilteredProducts(response.data || []);
       } catch (error) {
         console.error("Fetch error:", error);
         setProducts([]);
+        setFilteredProducts([]);
       } finally {
         setLoading(false);
       }
@@ -67,6 +77,22 @@ function App() {
     fetchProducts();
   }, [language]);
 
+  // Search functionality
+  useEffect(() => {
+    if (searchQuery.trim() === "") {
+      setFilteredProducts(products);
+    } else {
+      const query = searchQuery.toLowerCase();
+      const filtered = products.filter(
+        product =>
+          product.nameEn.toLowerCase().includes(query) ||
+          product.nameFa.includes(query)
+      );
+      setFilteredProducts(filtered);
+    }
+  }, [searchQuery, products]);
+
+  // Handle checkout
   const handleCheckout = () => {
     alert(
       language === "en"
@@ -76,6 +102,7 @@ function App() {
     cart.forEach((item) => removeFromCart(item._id));
   };
 
+  // Slider settings
   const sliderSettings = {
     dots: false,
     infinite: true,
@@ -101,7 +128,8 @@ function App() {
             <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-blue-400 bg-clip-text text-transparent">
               {language === "en" ? "E-Commerce Store" : "فروشگاه آنلاین"}
             </h1>
-            <div className="flex items-center gap-4">
+            <div className="header-controls">
+              {/* Language Dropdown */}
               <div
                 className={`language-dropdown ${
                   isDropdownOpen ? "active" : ""
@@ -145,7 +173,10 @@ function App() {
                         d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"
                       />
                     </svg>
-                    English
+                    <span className="language-name">
+                      English
+                      {language === "fa" && <span className="secondary-lang"> / انگلیسی</span>}
+                    </span>
                   </div>
                   <div
                     className={`language-option ${
@@ -167,9 +198,46 @@ function App() {
                         d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"
                       />
                     </svg>
-                    فارسی
+                    <span className="language-name">
+                      {language === "en" && <span className="secondary-lang">Persian / </span>}
+                      فارسی
+                    </span>
                   </div>
                 </div>
+              </div>
+
+              {/* Search Icon and Input */}
+              <div className="search-container" ref={searchRef}>
+                <button 
+                  className="search-icon" 
+                  onClick={() => setIsSearchOpen(!isSearchOpen)}
+                  aria-label={language === "en" ? "Search" : "جستجو"}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                </button>
+                {isSearchOpen && (
+                  <input
+                    type="text"
+                    placeholder={language === "en" ? "Search products..." : "جستجوی محصولات..."}
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="search-input"
+                    autoFocus
+                  />
+                )}
               </div>
             </div>
           </div>
@@ -197,6 +265,92 @@ function App() {
           {loading ? (
             <div className="flex items-center justify-center min-h-[400px]">
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-accent-primary"></div>
+            </div>
+          ) : searchQuery.trim() !== "" ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {filteredProducts.length > 0 ? (
+                filteredProducts.map((product) => {
+                  const cartItem = cart.find(
+                    (item) => item._id === product._id
+                  );
+                  const quantity = cartItem ? cartItem.quantity : 0;
+                  return (
+                    <div key={product._id} className="card product-card">
+                      <div className="product-image">
+                        <img
+                          src={product.image}
+                          alt={
+                            language === "en"
+                              ? product.nameEn
+                              : product.nameFa
+                          }
+                        />
+                        <div className="product-overlay" />
+                      </div>
+                      <div className="product-info">
+                        <h3 className="product-title">
+                          {language === "en"
+                            ? product.nameEn
+                            : product.nameFa}
+                        </h3>
+                        <p className="product-price">
+                          {product.price.toLocaleString(
+                            language === "fa" ? "fa-IR" : "en-US"
+                          )}
+                          {language === "fa" ? " ریال" : " IRR"}
+                        </p>
+                        <p className="product-description">
+                          {language === "en"
+                            ? product.descriptionEn
+                            : product.descriptionFa}
+                        </p>
+                        {quantity > 0 ? (
+                          <div className="quantity-controls">
+                            <button
+                              onClick={() =>
+                                updateQuantity(product._id, quantity - 1)
+                              }
+                              className="quantity-btn"
+                            >
+                              -
+                            </button>
+                            <span className="quantity-display">
+                              {language === "fa"
+                                ? toPersianNumber(quantity)
+                                : quantity}
+                            </span>
+                            <button
+                              onClick={() =>
+                                updateQuantity(product._id, quantity + 1)
+                              }
+                              className="quantity-btn"
+                            >
+                              +
+                            </button>
+                          </div>
+                        ) : (
+                          <button
+                            onClick={() => addToCart(product)}
+                            className="btn btn-primary w-full"
+                          >
+                            {language === "en"
+                              ? "Add to Cart"
+                              : "افزودن به سبد خرید"}
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="col-span-full text-center py-8">
+                  <p className="text-lg">
+                    {language === "en" 
+                      ? "No products found matching your search" 
+                      : "محصولی مطابق با جستجوی شما یافت نشد"}
+                  </p>
+                </div>
+              )}
             </div>
           ) : (
             <div className="max-w-6xl mx-auto">
