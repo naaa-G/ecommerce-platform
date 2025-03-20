@@ -1,13 +1,12 @@
 // Import React hooks and dependencies
-import { useState, useEffect, useContext, useRef } from "react"; // Core React hooks
-import axios from "axios"; // HTTP client for API calls
-import { useCart } from "./context/CartContext.jsx"; // Cart context
-import Slider from "react-slick"; // Slider component for products
-import "slick-carousel/slick/slick.css"; // Slider styles
-import "slick-carousel/slick/slick-theme.css"; // Slider theme
-import "./index.css"; // Custom styles
+import { useState, useEffect, useContext, useRef } from "react";
+import axios from "axios";
+import { useCart } from "./context/CartContext.jsx";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import "./index.css";
 
-// Function to convert numbers to Persian
 const toPersianNumber = (number) => {
   const persianNumbers = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
   return String(number)
@@ -16,21 +15,14 @@ const toPersianNumber = (number) => {
     .join("");
 };
 
-// Main App component
 function App() {
-  // State for products, initialized as empty array
   const [products, setProducts] = useState([]);
-  // Loading state for fetching products
   const [loading, setLoading] = useState(true);
-  // Cart state and functions from context
   const { cart, addToCart, removeFromCart, updateQuantity } = useCart();
-  // Language state, default to English
   const [language, setLanguage] = useState("en");
-  // Dropdown state for language switcher
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -41,7 +33,6 @@ function App() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Function to change language
   const changeLanguage = (newLang) => {
     setLanguage(newLang);
     document.documentElement.dir = newLang === "fa" ? "rtl" : "ltr";
@@ -49,15 +40,20 @@ function App() {
     setIsDropdownOpen(false);
   };
 
-  // Fetch products from API on mount
   useEffect(() => {
-    // Set initial language and direction
+    console.log("useEffect is running");
     document.documentElement.dir = language === "fa" ? "rtl" : "ltr";
     document.documentElement.lang = language;
 
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/products"); // Local testing
+        // Use import.meta.env for Vite, fallback to local URL
+        const apiUrl =
+          window.location.hostname === "localhost"
+            ? "http://localhost:5000/api/products"
+            : "/api/products";
+        console.log("Fetching from:", apiUrl);
+        const response = await axios.get(apiUrl);
         console.log("Products fetched:", response.data);
         setProducts(response.data || []);
       } catch (error) {
@@ -70,7 +66,6 @@ function App() {
     fetchProducts();
   }, [language]);
 
-  // Mock checkout function
   const handleCheckout = () => {
     alert(
       language === "en"
@@ -80,16 +75,15 @@ function App() {
     cart.forEach((item) => removeFromCart(item._id));
   };
 
-  // Slider settings with bilingual direction
   const sliderSettings = {
-    dots: false, // No navigation dots
-    infinite: true, // Loop slider
-    speed: 500, // Transition speed
-    slidesToShow: 4, // Show 4 products
-    slidesToScroll: 1, // Scroll 1 at a time
-    autoplay: true, // Auto-scroll
-    autoplaySpeed: 3000, // 3-second interval
-    rtl: language === "fa", // RTL for Persian, LTR for English
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    rtl: language === "fa",
     responsive: [
       { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 1 } },
       { breakpoint: 768, settings: { slidesToShow: 2, slidesToScroll: 1 } },
@@ -97,7 +91,6 @@ function App() {
     ],
   };
 
-  // Render the modern, centered UI
   return (
     <div className="min-h-screen" style={{ background: "var(--bg-primary)" }}>
       {/* Header */}
@@ -109,7 +102,9 @@ function App() {
             </h1>
             <div className="flex items-center gap-4">
               <div
-                className={`language-dropdown ${isDropdownOpen ? "active" : ""}`}
+                className={`language-dropdown ${
+                  isDropdownOpen ? "active" : ""
+                }`}
                 ref={dropdownRef}
               >
                 <button onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
@@ -130,7 +125,9 @@ function App() {
                 </button>
                 <div className="language-options">
                   <div
-                    className={`language-option ${language === "en" ? "active" : ""}`}
+                    className={`language-option ${
+                      language === "en" ? "active" : ""
+                    }`}
                     onClick={() => changeLanguage("en")}
                     data-lang="en"
                   >
@@ -150,7 +147,9 @@ function App() {
                     English
                   </div>
                   <div
-                    className={`language-option ${language === "fa" ? "active" : ""}`}
+                    className={`language-option ${
+                      language === "fa" ? "active" : ""
+                    }`}
                     onClick={() => changeLanguage("fa")}
                     data-lang="fa"
                   >
@@ -203,7 +202,9 @@ function App() {
               <div className="slick-container">
                 <Slider {...sliderSettings}>
                   {products.map((product) => {
-                    const cartItem = cart.find((item) => item._id === product._id);
+                    const cartItem = cart.find(
+                      (item) => item._id === product._id
+                    );
                     const quantity = cartItem ? cartItem.quantity : 0;
                     return (
                       <div key={product._id}>
@@ -211,13 +212,19 @@ function App() {
                           <div className="product-image">
                             <img
                               src={product.image}
-                              alt={language === "en" ? product.nameEn : product.nameFa}
+                              alt={
+                                language === "en"
+                                  ? product.nameEn
+                                  : product.nameFa
+                              }
                             />
                             <div className="product-overlay" />
                           </div>
                           <div className="product-info">
                             <h3 className="product-title">
-                              {language === "en" ? product.nameEn : product.nameFa}
+                              {language === "en"
+                                ? product.nameEn
+                                : product.nameFa}
                             </h3>
                             <p className="product-price">
                               {product.price.toLocaleString(
@@ -287,7 +294,9 @@ function App() {
                   className="text-center"
                   style={{ color: "var(--text-secondary)" }}
                 >
-                  {language === "en" ? "Your cart is empty" : "سبد خرید خالی است"}
+                  {language === "en"
+                    ? "Your cart is empty"
+                    : "سبد خرید خالی است"}
                 </p>
               ) : (
                 <div className="space-y-4">
@@ -353,7 +362,11 @@ function App() {
         <div className="container">
           <p>
             {language === "en" ? "Created by " : "ساخته شده توسط "}
-            <a href="https://github.com/naaa-G" target="_blank" rel="noopener noreferrer">
+            <a
+              href="https://github.com/naaa-G"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               naaa-G
             </a>
           </p>
